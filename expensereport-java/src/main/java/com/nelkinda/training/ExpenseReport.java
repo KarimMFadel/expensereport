@@ -67,8 +67,7 @@ public class ExpenseReport {
     private static List<InvoiceItem> calculateInvoiceItems(List<Expense> expenses) {
         List<InvoiceItem> invoiceItems = new ArrayList<>();
         for (Expense expense : expenses) {
-            InvoiceItem expenseItem = new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpenses(expense));
-            invoiceItems.add(expenseItem);
+            invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpenses(expense)));
         }
         return invoiceItems;
     }
