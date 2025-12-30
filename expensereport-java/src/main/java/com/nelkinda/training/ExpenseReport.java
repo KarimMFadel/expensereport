@@ -14,17 +14,17 @@ class Expense {
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
-        int total = 0;
-        int mealExpenses = 0;
 
         System.out.println("Expenses " + new Date());
 
+        int mealExpenses = 0;
         for (Expense expense : expenses) {
             if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
                 mealExpenses += expense.amount;
             }
         }
 
+        int total = 0;
         for (Expense expense : expenses) {
             System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
             total += expense.amount;
