@@ -16,7 +16,6 @@ public class ExpenseReportTest {
     void printReport_shouldHandleAllExpenseTypesAndOverExpenseMarkers() {
         // Arrange
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
 
         ExpenseReport report = new ExpenseReport();
@@ -43,7 +42,6 @@ public class ExpenseReportTest {
         report.printReport(expenses);
 
         // Assert
-        System.setOut(originalOut);
         String output = outputStream.toString();
 
         // Skip the first line (contains dynamic date)
