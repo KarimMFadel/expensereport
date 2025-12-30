@@ -1,5 +1,6 @@
 package com.nelkinda.training;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,12 @@ class InvoiceData {
 
 class InvoiceItem {
     String expenseName;
+    int amount;
     String mealOverExpensesMarker;
 
-    public InvoiceItem(String expenseName, String mealOverExpensesMarker) {
+    public InvoiceItem(String expenseName, int amount, String mealOverExpensesMarker) {
         this.expenseName = expenseName;
+        this.amount = amount;
         this.mealOverExpensesMarker = mealOverExpensesMarker;
     }
 }
@@ -40,9 +43,13 @@ public class ExpenseReport {
 
         System.out.println("Expenses " + invoiceData.date);
 
+        List<InvoiceItem> invoiceItems = new ArrayList<>();
         for (Expense expense : expenses) {
-            InvoiceItem expenseItem = new InvoiceItem(getExpenseName(expense), checkMealOverExpenses(expense));
-            System.out.println(expenseItem.expenseName + "\t" + expense.amount + "\t" + expenseItem.mealOverExpensesMarker);
+            InvoiceItem expenseItem = new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpenses(expense));
+            invoiceItems.add(expenseItem);
+        }
+        for (InvoiceItem expenseItem : invoiceItems) {
+            System.out.println(expenseItem.expenseName + "\t" + expenseItem.amount + "\t" + expenseItem.mealOverExpensesMarker);
         }
 
         System.out.println("Meal expenses: " + invoiceData.totalMealExpenses);
