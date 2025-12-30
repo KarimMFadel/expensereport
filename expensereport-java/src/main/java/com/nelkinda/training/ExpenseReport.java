@@ -21,10 +21,8 @@ public class ExpenseReport {
             System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
         }
 
-        int total = getTotalExpenses(expenses);
-
         System.out.println("Meal expenses: " + getTotalMealExpenses(expenses));
-        System.out.println("Total expenses: " + total);
+        System.out.println("Total expenses: " + getTotalExpenses(expenses));
     }
 
     private static int getTotalExpenses(List<Expense> expenses) {
