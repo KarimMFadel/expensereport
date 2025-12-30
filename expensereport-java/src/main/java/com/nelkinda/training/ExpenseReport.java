@@ -14,24 +14,39 @@ class Expense {
 
 class InvoiceData {
     Date date;
+    int totalExpenses;
+    int totalMealExpenses;
 
-    public InvoiceData(Date date) {
+    public InvoiceData(Date date, int totalExpenses, int totalMealExpenses) {
         this.date = date;
+        this.totalExpenses = totalExpenses;
+        this.totalMealExpenses = totalMealExpenses;
+    }
+}
+
+class InvoiceItem {
+    String expenseName;
+    String mealOverExpensesMarker;
+
+    public InvoiceItem(String expenseName, String mealOverExpensesMarker) {
+        this.expenseName = expenseName;
+        this.mealOverExpensesMarker = mealOverExpensesMarker;
     }
 }
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
-        InvoiceData invoiceData = new InvoiceData(new Date());
+        InvoiceData invoiceData = new InvoiceData(new Date(), getTotalExpenses(expenses), getTotalMealExpenses(expenses));
 
         System.out.println("Expenses " + invoiceData.date);
 
         for (Expense expense : expenses) {
-            System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
+            InvoiceItem expenseItem = new InvoiceItem(getExpenseName(expense), checkMealOverExpenses(expense));
+            System.out.println(expenseItem.expenseName + "\t" + expense.amount + "\t" + expenseItem.mealOverExpensesMarker);
         }
 
-        System.out.println("Meal expenses: " + getTotalMealExpenses(expenses));
-        System.out.println("Total expenses: " + getTotalExpenses(expenses));
+        System.out.println("Meal expenses: " + invoiceData.totalMealExpenses);
+        System.out.println("Total expenses: " + invoiceData.totalExpenses);
     }
 
     private static int getTotalExpenses(List<Expense> expenses) {
