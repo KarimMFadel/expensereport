@@ -41,11 +41,22 @@ class InvoiceItem {
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
-        InvoiceData invoiceData = new InvoiceData(new Date(), getTotalExpenses(expenses), getTotalMealExpenses(expenses), calculateInvoiceItems(expenses));
+        InvoiceData invoiceData = getInvoiceData(expenses);
 
+        presentInvoiceText(invoiceData);
+    }
+
+    private static InvoiceData getInvoiceData(List<Expense> expenses) {
+        return new InvoiceData(new Date(),
+                getTotalExpenses(expenses),
+                getTotalMealExpenses(expenses),
+                calculateInvoiceItems(expenses));
+    }
+
+    private static void presentInvoiceText(InvoiceData invoiceData) {
         System.out.println("Expenses " + invoiceData.date);
 
-        for (InvoiceItem expenseItem : calculateInvoiceItems(expenses)) {
+        for (InvoiceItem expenseItem : invoiceData.invoiceItems) {
             System.out.println(expenseItem.expenseName + "\t" + expenseItem.amount + "\t" + expenseItem.mealOverExpensesMarker);
         }
 
