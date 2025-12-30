@@ -12,10 +12,19 @@ class Expense {
     int amount;
 }
 
+class InvoiceData {
+    Date date;
+
+    public InvoiceData(Date date) {
+        this.date = date;
+    }
+}
+
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
+        InvoiceData invoiceData = new InvoiceData(new Date());
 
-        System.out.println("Expenses " + new Date());
+        System.out.println("Expenses " + invoiceData.date);
 
         for (Expense expense : expenses) {
             System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
