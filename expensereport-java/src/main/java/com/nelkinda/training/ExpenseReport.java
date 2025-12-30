@@ -24,9 +24,7 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
 
-            String expenseName = getExpenseName(expense);
-
-            System.out.println(expenseName + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
+            System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
 
             total += expense.amount;
         }
