@@ -38,8 +38,7 @@ public class ExpenseReport {
     }
 
     private static String checkMealOverExpenses(Expense expense) {
-        String mealOverExpensesMarker = expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000 ? "X" : " ";
-        return mealOverExpensesMarker;
+        return expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000 ? "X" : " ";
     }
 
     private static String getExpenseName(Expense expense) {
