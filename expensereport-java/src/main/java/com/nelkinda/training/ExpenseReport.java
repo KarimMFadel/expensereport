@@ -17,11 +17,11 @@ public class ExpenseReport {
 
         System.out.println("Expenses " + new Date());
 
-        int total = 0;
         for (Expense expense : expenses) {
             System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
         }
 
+        int total = 0;
         for (Expense expense : expenses) {
             total += expense.amount;
         }
