@@ -20,6 +20,9 @@ public class ExpenseReport {
         int total = 0;
         for (Expense expense : expenses) {
             System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
+        }
+
+        for (Expense expense : expenses) {
             total += expense.amount;
         }
 
