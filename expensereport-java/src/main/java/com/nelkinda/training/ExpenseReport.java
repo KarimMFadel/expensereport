@@ -23,9 +23,10 @@ public class ExpenseReport {
             if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
                 mealExpenses += expense.amount;
             }
+        }
 
+        for (Expense expense : expenses) {
             System.out.println(getExpenseName(expense) + "\t" + expense.amount + "\t" + checkMealOverExpenses(expense));
-
             total += expense.amount;
         }
 
