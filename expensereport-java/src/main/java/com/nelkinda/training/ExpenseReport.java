@@ -55,9 +55,15 @@ public class ExpenseReport {
         for (Expense expense : expenses) {
             total += expense.amount;
         }
+        int mealExpenses = 0;
+        for (Expense expense : expenses) {
+            if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
+                mealExpenses += expense.amount;
+            }
+        }
         return new InvoiceData(new Date(),
                 total,
-                getTotalMealExpenses(expenses),
+                mealExpenses,
                 calculateInvoiceItems(expenses));
     }
 
@@ -78,16 +84,6 @@ public class ExpenseReport {
             invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
         }
         return invoiceItems;
-    }
-
-    private static int getTotalMealExpenses(List<Expense> expenses) {
-        int mealExpenses = 0;
-        for (Expense expense : expenses) {
-            if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
-                mealExpenses += expense.amount;
-            }
-        }
-        return mealExpenses;
     }
 
     private static String checkMealOverExpense(Expense expense) {
