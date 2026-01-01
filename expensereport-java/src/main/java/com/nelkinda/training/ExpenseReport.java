@@ -53,6 +53,7 @@ public class ExpenseReport {
     private static InvoiceData getInvoiceData(List<Expense> expenses) {
         int total = 0;
         int mealExpenses = 0;
+        List<InvoiceItem> invoiceItems = new ArrayList<>();
 
         for (Expense expense : expenses) {
             total += expense.amount;
@@ -60,7 +61,6 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
         }
-        List<InvoiceItem> invoiceItems = new ArrayList<>();
         for (Expense expense : expenses) {
             invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
         }
