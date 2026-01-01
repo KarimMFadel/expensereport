@@ -60,7 +60,10 @@ public class ExpenseReport {
             if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
                 mealExpenses += expense.amount;
             }
-            invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
+            invoiceItems.add(new InvoiceItem(
+                    getExpenseName(expense),
+                    expense.amount,
+                    checkMealOverExpense(expense)));
         }
         return new InvoiceData(new Date(),
                 total,
