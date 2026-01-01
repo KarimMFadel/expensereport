@@ -52,11 +52,10 @@ public class ExpenseReport {
 
     private static InvoiceData getInvoiceData(List<Expense> expenses) {
         int total = 0;
+        int mealExpenses = 0;
+
         for (Expense expense : expenses) {
             total += expense.amount;
-        }
-        int mealExpenses = 0;
-        for (Expense expense : expenses) {
             if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
                 mealExpenses += expense.amount;
             }
