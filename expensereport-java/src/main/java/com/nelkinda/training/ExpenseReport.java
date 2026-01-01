@@ -30,12 +30,12 @@ class InvoiceData {
 class InvoiceItem {
     String expenseName;
     int amount;
-    String mealOverExpensesMarker;
+    String mealOverExpenseMarker;
 
-    public InvoiceItem(String expenseName, int amount, String mealOverExpensesMarker) {
+    public InvoiceItem(String expenseName, int amount, String mealOverExpenseMarker) {
         this.expenseName = expenseName;
         this.amount = amount;
-        this.mealOverExpensesMarker = mealOverExpensesMarker;
+        this.mealOverExpenseMarker = mealOverExpenseMarker;
     }
 }
 
@@ -57,7 +57,7 @@ public class ExpenseReport {
         System.out.println("Expenses " + invoiceData.date);
 
         for (InvoiceItem expenseItem : invoiceData.invoiceItems) {
-            System.out.println(expenseItem.expenseName + "\t" + expenseItem.amount + "\t" + expenseItem.mealOverExpensesMarker);
+            System.out.println(expenseItem.expenseName + "\t" + expenseItem.amount + "\t" + expenseItem.mealOverExpenseMarker);
         }
 
         System.out.println("Meal expenses: " + invoiceData.totalMealExpenses);
