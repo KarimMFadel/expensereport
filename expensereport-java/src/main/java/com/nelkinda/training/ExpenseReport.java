@@ -40,6 +40,10 @@ class InvoiceItem {
 }
 
 public class ExpenseReport {
+
+    public static final int DINNER_EXPENSE_LIMIT = 5000;
+    public static final int BREAKFAST_EXPENSE_LIMIT = 1000;
+
     public void printReport(List<Expense> expenses) {
         InvoiceData invoiceData = getInvoiceData(expenses);
 
@@ -91,8 +95,8 @@ public class ExpenseReport {
     }
 
     private static String checkMealOverExpense(Expense expense) {
-        return (expense.type == ExpenseType.DINNER && expense.amount > 5000)
-                || (expense.type == ExpenseType.BREAKFAST && expense.amount > 1000) ? "X" : " ";
+        return (expense.type == ExpenseType.DINNER && expense.amount > DINNER_EXPENSE_LIMIT)
+                || (expense.type == ExpenseType.BREAKFAST && expense.amount > BREAKFAST_EXPENSE_LIMIT) ? "X" : " ";
     }
 
     private static String getExpenseName(Expense expense) {
