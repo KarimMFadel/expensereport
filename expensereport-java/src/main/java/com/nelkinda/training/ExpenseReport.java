@@ -51,8 +51,12 @@ public class ExpenseReport {
     }
 
     private static InvoiceData getInvoiceData(List<Expense> expenses) {
+        int total = 0;
+        for (Expense expense : expenses) {
+            total += expense.amount;
+        }
         return new InvoiceData(new Date(),
-                getTotalExpenses(expenses),
+                total,
                 getTotalMealExpenses(expenses),
                 calculateInvoiceItems(expenses));
     }
@@ -74,14 +78,6 @@ public class ExpenseReport {
             invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
         }
         return invoiceItems;
-    }
-
-    private static int getTotalExpenses(List<Expense> expenses) {
-        int total = 0;
-        for (Expense expense : expenses) {
-            total += expense.amount;
-        }
-        return total;
     }
 
     private static int getTotalMealExpenses(List<Expense> expenses) {
