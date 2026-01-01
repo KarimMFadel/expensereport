@@ -67,7 +67,7 @@ public class ExpenseReport {
     private static List<InvoiceItem> calculateInvoiceItems(List<Expense> expenses) {
         List<InvoiceItem> invoiceItems = new ArrayList<>();
         for (Expense expense : expenses) {
-            invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpenses(expense)));
+            invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
         }
         return invoiceItems;
     }
@@ -90,7 +90,7 @@ public class ExpenseReport {
         return mealExpenses;
     }
 
-    private static String checkMealOverExpenses(Expense expense) {
+    private static String checkMealOverExpense(Expense expense) {
         return expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000 ? "X" : " ";
     }
 
