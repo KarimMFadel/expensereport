@@ -60,10 +60,14 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
         }
+        List<InvoiceItem> invoiceItems = new ArrayList<>();
+        for (Expense expense : expenses) {
+            invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
+        }
         return new InvoiceData(new Date(),
                 total,
                 mealExpenses,
-                calculateInvoiceItems(expenses));
+                invoiceItems);
     }
 
     private static void presentInvoiceText(InvoiceData invoiceData) {
@@ -75,14 +79,6 @@ public class ExpenseReport {
 
         System.out.println("Meal expenses: " + invoiceData.totalMealExpenses);
         System.out.println("Total expenses: " + invoiceData.totalExpenses);
-    }
-
-    private static List<InvoiceItem> calculateInvoiceItems(List<Expense> expenses) {
-        List<InvoiceItem> invoiceItems = new ArrayList<>();
-        for (Expense expense : expenses) {
-            invoiceItems.add(new InvoiceItem(getExpenseName(expense), expense.amount, checkMealOverExpense(expense)));
-        }
-        return invoiceItems;
     }
 
     private static String checkMealOverExpense(Expense expense) {
