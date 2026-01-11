@@ -5,7 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 enum ExpenseType {
-    DINNER, BREAKFAST, CAR_RENTAL
+    DINNER, BREAKFAST, CAR_RENTAL;
+
+    String getExpenseName() {
+        return switch (this) {
+            case DINNER -> "Dinner";
+            case BREAKFAST -> "Breakfast";
+            case CAR_RENTAL -> "Car Rental";
+        };
+    }
 }
 
 class Expense {
@@ -15,14 +23,6 @@ class Expense {
     boolean isOverLimit() {
         return (type == ExpenseType.DINNER && amount > ExpenseReport.DINNER_EXPENSE_LIMIT)
                 || (type == ExpenseType.BREAKFAST && amount > ExpenseReport.BREAKFAST_EXPENSE_LIMIT);
-    }
-
-    String getExpenseName() {
-        return switch (type) {
-            case DINNER -> "Dinner";
-            case BREAKFAST -> "Breakfast";
-            case CAR_RENTAL -> "Car Rental";
-        };
     }
 
     boolean isMeal() {
@@ -78,7 +78,7 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
             invoiceItems.add(new InvoiceItem(
-                    expense.getExpenseName(),
+                    expense.type.getExpenseName(),
                     expense.amount,
                     expense.isOverLimit() ? "X" : " "));
         }
