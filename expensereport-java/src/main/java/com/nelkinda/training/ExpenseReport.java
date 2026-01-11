@@ -11,6 +11,11 @@ enum ExpenseType {
 class Expense {
     ExpenseType type;
     int amount;
+
+    boolean isOverLimit() {
+        return (type == ExpenseType.DINNER && amount > ExpenseReport.DINNER_EXPENSE_LIMIT)
+                || (type == ExpenseType.BREAKFAST && amount > ExpenseReport.BREAKFAST_EXPENSE_LIMIT);
+    }
 }
 
 class InvoiceData {
@@ -63,7 +68,7 @@ public class ExpenseReport {
             invoiceItems.add(new InvoiceItem(
                     getExpenseName(expense),
                     expense.amount,
-                    isOverLimit(expense) ? "X" : " "));
+                    expense.isOverLimit() ? "X" : " "));
         }
         return new InvoiceData(new Date(),
                 total,
@@ -80,11 +85,6 @@ public class ExpenseReport {
 
         System.out.println("Meal expenses: " + invoiceData.totalMealExpenses);
         System.out.println("Total expenses: " + invoiceData.totalExpenses);
-    }
-
-    private boolean isOverLimit(Expense expense) {
-        return (expense.type == ExpenseType.DINNER && expense.amount > DINNER_EXPENSE_LIMIT)
-                || (expense.type == ExpenseType.BREAKFAST && expense.amount > BREAKFAST_EXPENSE_LIMIT);
     }
 
     private String getExpenseName(Expense expense) {
