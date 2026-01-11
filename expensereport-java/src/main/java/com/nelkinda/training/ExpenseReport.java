@@ -7,7 +7,7 @@ import java.util.List;
 enum ExpenseType {
     DINNER, BREAKFAST, CAR_RENTAL;
 
-    String getExpenseName() {
+    String getName() {
         return switch (this) {
             case DINNER -> "Dinner";
             case BREAKFAST -> "Breakfast";
@@ -78,7 +78,7 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
             invoiceItems.add(new InvoiceItem(
-                    expense.type.getExpenseName(),
+                    expense.type.getName(),
                     expense.amount,
                     expense.isOverLimit() ? "X" : " "));
         }
