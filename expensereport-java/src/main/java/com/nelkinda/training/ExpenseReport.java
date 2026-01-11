@@ -70,7 +70,7 @@ public class ExpenseReport {
 
         for (Expense expense : expenses) {
             total += expense.amount;
-            if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
+            if (isMeal(expense)) {
                 mealExpenses += expense.amount;
             }
             invoiceItems.add(new InvoiceItem(
@@ -82,6 +82,10 @@ public class ExpenseReport {
                 total,
                 mealExpenses,
                 invoiceItems);
+    }
+
+    private static boolean isMeal(Expense expense) {
+        return expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST;
     }
 
     private void presentInvoiceText(InvoiceData invoiceData) {
