@@ -16,6 +16,14 @@ class Expense {
         return (type == ExpenseType.DINNER && amount > ExpenseReport.DINNER_EXPENSE_LIMIT)
                 || (type == ExpenseType.BREAKFAST && amount > ExpenseReport.BREAKFAST_EXPENSE_LIMIT);
     }
+
+    String getExpenseName() {
+        return switch (type) {
+            case DINNER -> "Dinner";
+            case BREAKFAST -> "Breakfast";
+            case CAR_RENTAL -> "Car Rental";
+        };
+    }
 }
 
 class InvoiceData {
@@ -66,7 +74,7 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
             invoiceItems.add(new InvoiceItem(
-                    getExpenseName(expense),
+                    expense.getExpenseName(),
                     expense.amount,
                     expense.isOverLimit() ? "X" : " "));
         }
@@ -87,11 +95,4 @@ public class ExpenseReport {
         System.out.println("Total expenses: " + invoiceData.totalExpenses);
     }
 
-    private String getExpenseName(Expense expense) {
-        return switch (expense.type) {
-            case DINNER -> "Dinner";
-            case BREAKFAST -> "Breakfast";
-            case CAR_RENTAL -> "Car Rental";
-        };
-    }
 }
