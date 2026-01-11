@@ -18,6 +18,10 @@ enum ExpenseType {
     String getName() {
         return name;
     }
+
+    boolean isMeal() {
+        return this == DINNER || this == BREAKFAST;
+    }
 }
 
 class Expense {
@@ -29,9 +33,6 @@ class Expense {
                 || (type == ExpenseType.BREAKFAST && amount > ExpenseReport.BREAKFAST_EXPENSE_LIMIT);
     }
 
-    boolean isMeal() {
-        return type == ExpenseType.DINNER || type == ExpenseType.BREAKFAST;
-    }
 }
 
 class InvoiceData {
@@ -78,7 +79,7 @@ public class ExpenseReport {
 
         for (Expense expense : expenses) {
             total += expense.amount;
-            if (expense.isMeal()) {
+            if (expense.type.isMeal()) {
                 mealExpenses += expense.amount;
             }
             invoiceItems.add(new InvoiceItem(
