@@ -24,6 +24,10 @@ class Expense {
             case CAR_RENTAL -> "Car Rental";
         };
     }
+
+    boolean isMeal() {
+        return type == ExpenseType.DINNER || type == ExpenseType.BREAKFAST;
+    }
 }
 
 class InvoiceData {
@@ -70,7 +74,7 @@ public class ExpenseReport {
 
         for (Expense expense : expenses) {
             total += expense.amount;
-            if (isMeal(expense)) {
+            if (expense.isMeal()) {
                 mealExpenses += expense.amount;
             }
             invoiceItems.add(new InvoiceItem(
@@ -82,10 +86,6 @@ public class ExpenseReport {
                 total,
                 mealExpenses,
                 invoiceItems);
-    }
-
-    private static boolean isMeal(Expense expense) {
-        return expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST;
     }
 
     private void presentInvoiceText(InvoiceData invoiceData) {
