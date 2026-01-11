@@ -50,7 +50,7 @@ public class ExpenseReport {
         presentInvoiceText(invoiceData);
     }
 
-    private static InvoiceData getInvoiceData(List<Expense> expenses) {
+    private InvoiceData getInvoiceData(List<Expense> expenses) {
         int total = 0;
         int mealExpenses = 0;
         List<InvoiceItem> invoiceItems = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ExpenseReport {
             invoiceItems.add(new InvoiceItem(
                     getExpenseName(expense),
                     expense.amount,
-                    checkMealOverExpense(expense)));
+                    isOverLimit(expense) ? "X" : " "));
         }
         return new InvoiceData(new Date(),
                 total,
@@ -71,7 +71,7 @@ public class ExpenseReport {
                 invoiceItems);
     }
 
-    private static void presentInvoiceText(InvoiceData invoiceData) {
+    private void presentInvoiceText(InvoiceData invoiceData) {
         System.out.println("Expenses " + invoiceData.date);
 
         for (InvoiceItem expenseItem : invoiceData.invoiceItems) {
@@ -82,12 +82,12 @@ public class ExpenseReport {
         System.out.println("Total expenses: " + invoiceData.totalExpenses);
     }
 
-    private static String checkMealOverExpense(Expense expense) {
+    private boolean isOverLimit(Expense expense) {
         return (expense.type == ExpenseType.DINNER && expense.amount > DINNER_EXPENSE_LIMIT)
-                || (expense.type == ExpenseType.BREAKFAST && expense.amount > BREAKFAST_EXPENSE_LIMIT) ? "X" : " ";
+                || (expense.type == ExpenseType.BREAKFAST && expense.amount > BREAKFAST_EXPENSE_LIMIT);
     }
 
-    private static String getExpenseName(Expense expense) {
+    private String getExpenseName(Expense expense) {
         return switch (expense.type) {
             case DINNER -> "Dinner";
             case BREAKFAST -> "Breakfast";
