@@ -1,50 +1,109 @@
 package com.nelkinda.training;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 enum ExpenseType {
-    DINNER, BREAKFAST, CAR_RENTAL
+    DINNER("Dinner", true),
+    BREAKFAST("Breakfast", true),
+    CAR_RENTAL("Car Rental", false);
+
+    private final String name;
+    private final boolean meal;
+
+    ExpenseType(String name, boolean meal) {
+        this.name = name;
+        this.meal = meal;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    boolean isMeal() {
+        return meal;
+    }
 }
 
 class Expense {
     ExpenseType type;
     int amount;
+
+    boolean isOverLimit() {
+        return (type == ExpenseType.DINNER && amount > ExpenseReport.DINNER_EXPENSE_LIMIT)
+                || (type == ExpenseType.BREAKFAST && amount > ExpenseReport.BREAKFAST_EXPENSE_LIMIT);
+    }
+
+}
+
+class InvoiceData {
+    Date date;
+    int totalExpenses;
+    int totalMealExpenses;
+    List<InvoiceItem> invoiceItems;
+
+    public InvoiceData(Date date, int totalExpenses, int totalMealExpenses, List<InvoiceItem> invoiceItems) {
+        this.date = date;
+        this.totalExpenses = totalExpenses;
+        this.totalMealExpenses = totalMealExpenses;
+        this.invoiceItems = invoiceItems;
+    }
+}
+
+class InvoiceItem {
+    String expenseName;
+    int amount;
+    String mealOverExpenseMarker;
+
+    public InvoiceItem(String expenseName, int amount, String mealOverExpenseMarker) {
+        this.expenseName = expenseName;
+        this.amount = amount;
+        this.mealOverExpenseMarker = mealOverExpenseMarker;
+    }
 }
 
 public class ExpenseReport {
+
+    public static final int DINNER_EXPENSE_LIMIT = 5000;
+    public static final int BREAKFAST_EXPENSE_LIMIT = 1000;
+
     public void printReport(List<Expense> expenses) {
+        InvoiceData invoiceData = getInvoiceData(expenses);
+
+        presentInvoiceText(invoiceData);
+    }
+
+    private InvoiceData getInvoiceData(List<Expense> expenses) {
         int total = 0;
         int mealExpenses = 0;
-
-        System.out.println("Expenses " + new Date());
+        List<InvoiceItem> invoiceItems = new ArrayList<>();
 
         for (Expense expense : expenses) {
-            if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
+            total += expense.amount;
+            if (expense.type.isMeal()) {
                 mealExpenses += expense.amount;
             }
+            invoiceItems.add(new InvoiceItem(
+                    expense.type.getName(),
+                    expense.amount,
+                    expense.isOverLimit() ? "X" : " "));
+        }
+        return new InvoiceData(new Date(),
+                total,
+                mealExpenses,
+                invoiceItems);
+    }
 
-            String expenseName = "";
-            switch (expense.type) {
-            case DINNER:
-                expenseName = "Dinner";
-                break;
-            case BREAKFAST:
-                expenseName = "Breakfast";
-                break;
-            case CAR_RENTAL:
-                expenseName = "Car Rental";
-                break;
-            }
+    private void presentInvoiceText(InvoiceData invoiceData) {
+        System.out.println("Expenses " + invoiceData.date);
 
-            String mealOverExpensesMarker = expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000 ? "X" : " ";
-
-            System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
-
-            total += expense.amount;
+        for (InvoiceItem expenseItem : invoiceData.invoiceItems) {
+            System.out.println(expenseItem.expenseName + "\t" + expenseItem.amount + "\t" + expenseItem.mealOverExpenseMarker);
         }
 
-        System.out.println("Meal expenses: " + mealExpenses);
-        System.out.println("Total expenses: " + total);
+        System.out.println("Meal expenses: " + invoiceData.totalMealExpenses);
+        System.out.println("Total expenses: " + invoiceData.totalExpenses);
     }
+
 }
